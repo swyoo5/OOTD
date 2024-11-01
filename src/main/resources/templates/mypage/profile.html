@@ -6,11 +6,11 @@
 </head>
 <body>
 <h1>사용자 정보</h1>
-<p>아이디: [[${user.userId}]]</p>
-<p>이메일: <span th:text="${user.email}"/></p>
-<p>닉네임: <span th:text="${user.nickname}"/></p>
-<p>프로필 이미지: <span th:text="${user.profileImage}"/></p>
-<p>가입일: <span th:text="${user.regDate}"/></p>
+<p>아이디: <span th:text="${user.userId}"></span></p>
+<p>이메일: <span th:text="${user.email}"></span></p>
+<p>닉네임: <span th:text="${user.nickname}"></span></p>
+<!--<p>프로필 이미지: <span th:text="${user.profileImage}"></span></p>-->
+<!--<p>가입일: <span th:text="${user.regDate}"></span></p>-->
 <a>수정</a>
 </body>
 </html>

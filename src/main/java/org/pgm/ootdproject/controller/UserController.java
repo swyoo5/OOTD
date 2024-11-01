@@ -34,7 +34,11 @@ public class UserController {
 
     @GetMapping("/profile")
     public String getProfilePage(Model model,
-                                 @RequestParam Long userId) {
+                                 @RequestParam(value = "userId", required = false) Long userId) {
+        if (userId == null) {
+            throw new IllegalArgumentException("User id가 없습니다");
+        }
+
         User user = userService.getUserById(userId)
                         .orElseThrow(() -> new RuntimeException("User not found"));
         model.addAttribute("user", user);
