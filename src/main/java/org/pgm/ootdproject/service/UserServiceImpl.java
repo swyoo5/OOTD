@@ -3,9 +3,7 @@ package org.pgm.ootdproject.service;
 import jakarta.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.pgm.ootdproject.entity.User;
 import org.pgm.ootdproject.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -34,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserById(Long userId) {
+    public Optional<User> readUser(Long userId) {
         return userRepository.findById(userId);
     }
 }
