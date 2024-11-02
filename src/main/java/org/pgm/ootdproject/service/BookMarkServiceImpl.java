@@ -3,6 +3,8 @@ package org.pgm.ootdproject.service;
 import jakarta.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.pgm.ootdproject.entity.BookMark;
+import org.pgm.ootdproject.entity.BookMarkId;
 import org.pgm.ootdproject.repository.BookmarkRepository;
 import org.springframework.stereotype.Service;
 

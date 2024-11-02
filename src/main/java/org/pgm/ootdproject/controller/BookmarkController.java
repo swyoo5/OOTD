@@ -2,6 +2,8 @@ package org.pgm.ootdproject.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.pgm.ootdproject.entity.BookMark;
+import org.pgm.ootdproject.entity.BookMarkId;
 import org.pgm.ootdproject.service.BookMarkService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,5 +1,6 @@
 package org.pgm.ootdproject.repository;
 
+import org.pgm.ootdproject.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

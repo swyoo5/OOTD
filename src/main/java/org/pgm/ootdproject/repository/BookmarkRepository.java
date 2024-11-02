@@ -1,5 +1,7 @@
 package org.pgm.ootdproject.repository;
 
+import org.pgm.ootdproject.entity.BookMark;
+import org.pgm.ootdproject.entity.BookMarkId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

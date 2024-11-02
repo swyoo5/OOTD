@@ -3,6 +3,7 @@ package org.pgm.ootdproject.service;
 import jakarta.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.pgm.ootdproject.entity.User;
 import org.pgm.ootdproject.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
