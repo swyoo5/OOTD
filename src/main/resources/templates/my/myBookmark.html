@@ -10,9 +10,9 @@
     <h2>북마크된 게시물</h2>
 
     <!-- 에러 메시지 표시 부분 -->
-    <div th:if="${errorMessage != null}">
-        <p class="alert alert-danger" th:text="${errorMessage}"></p>
-    </div>
+<!--    <div th:if="${errorMessage != null}">-->
+<!--        <p class="alert alert-danger" th:text="${errorMessage}"></p>-->
+<!--    </div>-->
 
     <!-- 북마크 게시물 정보 표시 부분 -->
     <div th:if="${bookmark != null}">
@@ -34,7 +34,7 @@
 
     <!-- 뒤로 가기 버튼 -->
     <div class="mt-3">
-        <a href="/myBookmarkList" class="btn btn-primary">뒤로 가기</a>
+        <a th:href="@{/myBookmarkList/{userId}(userId=${userId})}" class="btn btn-primary">뒤로 가기</a>
     </div>
 </div>
 
