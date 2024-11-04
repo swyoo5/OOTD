@@ -1,6 +1,7 @@
 package org.pgm.ootdproject.repository;
 
 import org.junit.jupiter.api.Test;
+import org.pgm.ootdproject.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -49,7 +50,7 @@ public class UserRepositoryTest {
 
     @Test
     public void testDelete() {
-        Long id = 1L;
+        Long id = 11L;
         Optional<User> result = userRepository.findById(id);
         User user = result.orElseThrow();
         userRepository.delete(user);

@@ -1,6 +1,8 @@
 package org.pgm.ootdproject.repository;
 
 import org.junit.jupiter.api.Test;
+import org.pgm.ootdproject.entity.Board;
+import org.pgm.ootdproject.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -42,5 +44,11 @@ public class BoardRepositoryTest {
         Board board = result.orElseThrow();
 
         System.out.println(board);
+    }
+
+    @Test
+    public void testDelete() {
+        Long id = 12L;
+        boardRepository.deleteById(id);
     }
 }

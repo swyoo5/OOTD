@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,7 +39,7 @@ public class BookmarkController {
         return "/my/myBookmarkList";
     }
 
-    @GetMapping("/delete/{userId}/{boardId}")
+    @PostMapping("/delete/{userId}/{boardId}")
     public String deleteBookmark(@PathVariable("userId") Long userId,
                                  @PathVariable("boardId") Long boardId) {
         BookMarkId bookmarkId = new BookMarkId(userId, boardId);

@@ -11,12 +11,15 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name ="chat_participant")
 public class ChatParticipant {
-    @Id
+    @EmbeddedId
+    private ChatParticipantId id;
+
+    @MapsId("chatRoomId")
     @ManyToOne
     @JoinColumn(name = "chatroom_id", nullable = false)
-    private Board board;
+    private ChatRoom chatRoom;
 
-    @Id
+    @MapsId("userId")
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

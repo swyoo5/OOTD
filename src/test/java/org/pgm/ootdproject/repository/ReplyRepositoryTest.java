@@ -1,6 +1,9 @@
 package org.pgm.ootdproject.repository;
 
 import org.junit.jupiter.api.Test;
+import org.pgm.ootdproject.entity.Board;
+import org.pgm.ootdproject.entity.Reply;
+import org.pgm.ootdproject.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 

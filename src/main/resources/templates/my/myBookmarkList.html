@@ -40,8 +40,8 @@
 
             <!-- 삭제 폼 -->
             <td>
-                <form th:action="@{/bookmark/delete/{userId}/{boardId}(userId=${bookmark.user.userId}, boardId=${bookmark.board != null ? bookmark.board.boardId : 0})}"
-                      method="get" onsubmit="return confirm('북마크를 삭제하시겠습니까?');">
+                <form th:action="@{/delete/{userId}/{boardId}(userId=${bookmark.user.userId}, boardId=${bookmark.board != null ? bookmark.board.boardId : 0})}"
+                      method="post" onsubmit="return confirm('북마크를 삭제하시겠습니까?');">
                     <button type="submit" class="btn btn-danger btn-sm" th:disabled="${bookmark.board == null}">삭제</button>
                 </form>
             </td>

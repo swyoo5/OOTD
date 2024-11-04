@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -39,4 +40,11 @@ public class Reply {
     @Column(name = "is_deleted", nullable = false)
     @ColumnDefault("0")
     private Boolean isDeleted;
+
+    // 자식 엔터티 Cascade
+    @OneToMany(mappedBy = "reply", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<ReplyLike> replyLikes;
+
+    @OneToMany(mappedBy = "reply", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<ReportedReply> reportedReplies;
 }
