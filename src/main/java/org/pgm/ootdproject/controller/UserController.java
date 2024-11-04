@@ -29,7 +29,7 @@ public class UserController {
     // 마이페이지
     @GetMapping("/mypage")
     public String showMyPage(Model model) {
-        Long userId = 3L;
+        Long userId = 2L;
         model.addAttribute("userId", userId);
         return "/my/mypage";
     }

@@ -23,7 +23,7 @@ public class BookmarkController {
 
     // 북마크 게시물 하나
     @GetMapping("/bookmark/{userId}/{boardId}")
-    public String readOndBookmark(@PathVariable("userId") Long userId,
+    public String readOneBookmark(@PathVariable("userId") Long userId,
                                   @PathVariable("boardId") Long boardId,
                                   Model model) {
         BookMarkId bookmarkId = new BookMarkId(userId, boardId);
@@ -34,15 +34,16 @@ public class BookmarkController {
         } else {
             // board가 없거나 북마크가 없는 경우 처리
             model.addAttribute("errorMessage", "해당 게시물을 찾을 수 없습니다.");
+            log.error("Bookmark or Board not found for userId: {}, boardId: {}", userId, boardId);
         }
 //        bookmark.ifPresent(value -> model.addAttribute("bookmark", value));
         return "/my/myBookmark";
     }
 
-    @GetMapping("/myBookmarkList")
-    public String readAllBookmarks(Model model) {
-        List<BookMark> bookmarks = bookMarkService.readAllBookmarks();
-        model.addAttribute("bookmarks", bookmarks);
+    @GetMapping("/myBookmarkList/{userId}")
+    public String readBookmarkList(@PathVariable("userId") Long userId, Model model) {
+        List<BookMark> bookMarks = bookMarkService.readUserBookmarks(userId);
+        model.addAttribute("bookmarks", bookMarks);
         return "/my/myBookmarkList";
     }
 

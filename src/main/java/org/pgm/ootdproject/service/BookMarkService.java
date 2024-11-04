@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface BookMarkService {
     Optional<BookMark> readBookMark(BookMarkId bookmarkId);
-    List<BookMark> readAllBookmarks();
+    List<BookMark> readUserBookmarks(Long userId);
     void deleteBookMark(BookMarkId bookmarkId);
 }

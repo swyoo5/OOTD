@@ -35,12 +35,13 @@
             </td>
 
             <!-- 작성자 및 작성 날짜 - board가 null이 아닌 경우만 접근 -->
-            <td th:text="${bookmark.board != null ? bookmark.board.user.loginId : '정보 없음'}">작성자</td>
+            <td th:text="${bookmark.board != null ? bookmark.board.user.nickname : '정보 없음'}">작성자</td>
             <td th:text="${bookmark.board != null ? #temporals.format(bookmark.board.regDate, 'yyyy-MM-dd HH:mm') : ''}">작성 날짜</td>
 
             <!-- 삭제 폼 -->
             <td>
-                <form th:action="@{/delete/{userId}/{boardId}(userId=${bookmark.user.userId}, boardId=${bookmark.board != null ? bookmark.board.boardId : 0})}"
+
+                <form th:action="@{/delete/{userId}/{boardId}(userId=${bookmark.user.userId}, boardId=${bookmark.board.boardId != null ? bookmark.board.boardId : 0})}"
                       method="post" onsubmit="return confirm('북마크를 삭제하시겠습니까?');">
                     <button type="submit" class="btn btn-danger btn-sm" th:disabled="${bookmark.board == null}">삭제</button>
                 </form>

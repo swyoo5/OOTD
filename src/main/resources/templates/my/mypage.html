@@ -135,7 +135,7 @@
                     <div id="collapseBookmarks" class="accordion-collapse collapse" aria-labelledby="headingBookmarks"
                          data-bs-parent="#myPageAccordion">
                         <div class="accordion-body">
-                            <a th:href="@{/myBookmarkList}">북마크 조회</a><br>
+                            <a th:href="@{/myBookmarkList/{userId}(userId=${userId})}">북마크 조회</a><br>
                         </div>
                     </div>
                 </div>
