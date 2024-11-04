@@ -29,7 +29,7 @@ public class UserController {
     // 마이페이지
     @GetMapping("/mypage")
     public String showMyPage(Model model) {
-        Long userId = 2L;
+        Long userId = 3L;
         model.addAttribute("userId", userId);
         return "/my/mypage";
     }
@@ -63,8 +63,8 @@ public class UserController {
         return "redirect:/profile/" + userId;
     }
 
-    @GetMapping("/delete")
-    public String deleteUser(Long userId) {
+    @PostMapping("/delete")
+    public String deleteUser(@RequestParam Long userId) {
         log.info("delete");
         userService.deleteUser(userId);
         return "redirect:/profile";

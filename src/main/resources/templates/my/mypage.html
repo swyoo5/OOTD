@@ -1,68 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>My Page - OOTD Project</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <style>
+        .card-container {
+            margin-top: 20px;
+            margin-left: 20px;
+            max-width: 60%;
+        }
+
+        .sidebar-card {
+            position: fixed;
+            right: 20px;
+            top: 80px;
+            width: 300px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+<div class="d-flex" id="wrapper">
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                        <li class="nav-item active"><a class="nav-link" href="#!">게시판</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">채팅방</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">마이페이지</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">로그아웃</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="card sidebar-card text-center shadow-sm">
+            <div class="card-header">
+                인기 게시물
+            </div>
+            <div class="card-body">
+                <a href="#"><img src="https://via.placeholder.com/150" alt="이미지" class="img-fluid"></a>
+                <div class="mt-2">
+                    <button class="btn btn-secondary btn-sm">&lt;</button>
+                    <button class="btn btn-secondary btn-sm">&gt;</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page content with Accordion -->
+        <div class="container card-container shadow-sm" layout:fragment="content">
+            <h1 class="mt-4">My Page</h1>
+
+            <div class="accordion" id="myPageAccordion">
+                <!-- 회원정보 섹션 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingProfile">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseProfile" aria-expanded="true" aria-controls="collapseProfile">
+                            회원정보
+                        </button>
+                    </h2>
+                    <div id="collapseProfile" class="accordion-collapse collapse show" aria-labelledby="headingProfile"
+                         data-bs-parent="#myPageAccordion">
+                        <div class="accordion-body">
+                            <a th:href="@{/profile/{userId}(userId=${userId})}">프로필 조회</a><br>
+                            <a th:href="@{/profile/{userId}/updateMyProfile(userId=${userId})}">프로필 수정</a><br>
+                            <form action="/delete" method="post" onsubmit="return confirm('탈퇴하시겠습니까?');">
+                                <input type="hidden" name="userId" th:value="${userId}" />
+                                <button type="submit" class="btn btn-danger">탈퇴</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 내 게시물 섹션 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingPosts">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts">
+                            내 게시물
+                        </button>
+                    </h2>
+                    <div id="collapsePosts" class="accordion-collapse collapse" aria-labelledby="headingPosts"
+                         data-bs-parent="#myPageAccordion">
+                        <div class="accordion-body">
+                            <a th:href="@{/myBoardList}">게시물 조회</a><br>
+<!--                            <form action="/delete/{boardId}" method="post">-->
+<!--                                <button type="submit" class="btn btn-danger">게시물 삭제</button>-->
+<!--                            </form>-->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 내 댓글 섹션 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingComments">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseComments" aria-expanded="false"
+                                aria-controls="collapseComments">
+                            내 댓글
+                        </button>
+                    </h2>
+                    <div id="collapseComments" class="accordion-collapse collapse" aria-labelledby="headingComments"
+                         data-bs-parent="#myPageAccordion">
+                        <div class="accordion-body">
+                            <a th:href="@{/myReplyList}">댓글 조회</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 내 북마크 섹션 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingBookmarks">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseBookmarks" aria-expanded="false"
+                                aria-controls="collapseBookmarks">
+                            내 북마크
+                        </button>
+                    </h2>
+                    <div id="collapseBookmarks" class="accordion-collapse collapse" aria-labelledby="headingBookmarks"
+                         data-bs-parent="#myPageAccordion">
+                        <div class="accordion-body">
+                            <a th:href="@{/myBookmarkList}">북마크 조회</a><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/scripts.js"></script>
+
+</body>
+</html>
+
+
+
+
+
 <!--<!DOCTYPE html>-->
 <!--<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
-<!--      xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="utf-8"/>-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>-->
-<!--    <meta name="description" content=""/>-->
-<!--    <meta name="author" content=""/>-->
-<!--    <title>My Page - OOTD Project</title>-->
-<!--    &lt;!&ndash; Favicon&ndash;&gt;-->
-<!--    <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}"/>-->
-<!--    &lt;!&ndash; Core theme CSS (includes Bootstrap)&ndash;&gt;-->
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"/>-->
-<!--    <link th:href="@{/css/styles.css}" rel="stylesheet"/>-->
-<!--    <style>-->
-<!--        .card-container {-->
-<!--            margin-top: 20px;-->
-<!--            margin-left: 20px;-->
-<!--            max-width: 60%;-->
-<!--        }-->
+<!--      xmlns:th="http://www.thymeleaf.org"-->
+<!--      layout:decorate="~{layout/basic.html}">-->
 
-<!--        .sidebar-card {-->
-<!--            position: fixed;-->
-<!--            right: 20px;-->
-<!--            top: 80px;-->
-<!--            width: 300px;-->
-<!--            z-index: 1000;-->
-<!--        }-->
-<!--    </style>-->
-<!--</head>-->
 <!--<body>-->
-<!--<div class="d-flex" id="wrapper">-->
-<!--    <div id="page-content-wrapper">-->
-<!--        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">-->
-<!--            <div class="container-fluid">-->
-<!--                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"-->
-<!--                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"-->
-<!--                        aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>-->
-<!--                </button>-->
-<!--                <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-<!--                    <ul class="navbar-nav ms-auto mt-2 mt-lg-0">-->
-<!--                        <li class="nav-item active"><a class="nav-link" href="#!">게시판</a></li>-->
-<!--                        <li class="nav-item"><a class="nav-link" href="#!">채팅방</a></li>-->
-<!--                        <li class="nav-item"><a class="nav-link" href="#!">마이페이지</a></li>-->
-<!--                        <li class="nav-item"><a class="nav-link" href="#!">로그아웃</a></li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </nav>-->
-
-<!--        <div class="card sidebar-card text-center shadow-sm">-->
-<!--            <div class="card-header">-->
-<!--                인기 게시물-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--                <a href="#"><img src="https://via.placeholder.com/150" alt="이미지" class="img-fluid"></a>-->
-<!--                <div class="mt-2">-->
-<!--                    <button class="btn btn-secondary btn-sm">&lt;</button>-->
-<!--                    <button class="btn btn-secondary btn-sm">&gt;</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
+<!--    <div layout:fragment="content">-->
 <!--        &lt;!&ndash; Page content with Accordion &ndash;&gt;-->
-<!--        <div class="container card-container shadow-sm" layout:fragment="content">-->
+<!--        <div class="container card-container shadow-sm">-->
 <!--            <h1 class="mt-4">My Page</h1>-->
 
 <!--            <div class="accordion" id="myPageAccordion">-->
@@ -98,9 +199,6 @@
 <!--                         data-bs-parent="#myPageAccordion">-->
 <!--                        <div class="accordion-body">-->
 <!--                            <a th:href="@{/myBoardList}">게시물 조회</a><br>-->
-<!--&lt;!&ndash;                            <form action="/delete/{boardId}" method="post">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <button type="submit" class="btn btn-danger">게시물 삭제</button>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </form>&ndash;&gt;-->
 <!--                        </div>-->
 <!--                    </div>-->
 <!--                </div>-->
@@ -141,101 +239,4 @@
 <!--            </div>-->
 <!--        </div>-->
 <!--    </div>-->
-<!--</div>-->
-
-<!--&lt;!&ndash; Bootstrap core JS&ndash;&gt;-->
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>-->
-<!--<script src="/js/scripts.js"></script>-->
-
 <!--</body>-->
-<!--</html>-->
-
-
-<!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{layout/basic.html}">
-<head>
-    <title>My Page - OOTD Project</title>
-</head>
-<body>
-<div layout:fragment="content">
-    <!-- Page content with Accordion -->
-    <div class="container card-container shadow-sm">
-        <h1 class="mt-4">My Page</h1>
-
-        <div class="accordion" id="myPageAccordion">
-            <!-- 회원정보 섹션 -->
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingProfile">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseProfile" aria-expanded="true" aria-controls="collapseProfile">
-                        회원정보
-                    </button>
-                </h2>
-                <div id="collapseProfile" class="accordion-collapse collapse show" aria-labelledby="headingProfile"
-                     data-bs-parent="#myPageAccordion">
-                    <div class="accordion-body">
-                        <a th:href="@{/profile/{userId}(userId=${userId})}">프로필 조회</a><br>
-                        <a th:href="@{/profile/{userId}/updateMyProfile(userId=${userId})}">프로필 수정</a><br>
-                        <form action="/delete" method="post" onsubmit="return confirm('탈퇴하시겠습니까?');">
-                            <button type="submit" class="btn btn-danger">탈퇴</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 내 게시물 섹션 -->
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingPosts">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts">
-                        내 게시물
-                    </button>
-                </h2>
-                <div id="collapsePosts" class="accordion-collapse collapse" aria-labelledby="headingPosts"
-                     data-bs-parent="#myPageAccordion">
-                    <div class="accordion-body">
-                        <a th:href="@{/myBoardList}">게시물 조회</a><br>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 내 댓글 섹션 -->
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingComments">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseComments" aria-expanded="false"
-                            aria-controls="collapseComments">
-                        내 댓글
-                    </button>
-                </h2>
-                <div id="collapseComments" class="accordion-collapse collapse" aria-labelledby="headingComments"
-                     data-bs-parent="#myPageAccordion">
-                    <div class="accordion-body">
-                        <a th:href="@{/myReplyList}">댓글 조회</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 내 북마크 섹션 -->
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingBookmarks">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseBookmarks" aria-expanded="false"
-                            aria-controls="collapseBookmarks">
-                        내 북마크
-                    </button>
-                </h2>
-                <div id="collapseBookmarks" class="accordion-collapse collapse" aria-labelledby="headingBookmarks"
-                     data-bs-parent="#myPageAccordion">
-                    <div class="accordion-body">
-                        <a th:href="@{/myBookmarkList}">북마크 조회</a><br>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</body>
-</html>

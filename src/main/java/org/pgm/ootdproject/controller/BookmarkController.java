@@ -28,8 +28,15 @@ public class BookmarkController {
                                   Model model) {
         BookMarkId bookmarkId = new BookMarkId(userId, boardId);
         Optional<BookMark> bookmark = bookMarkService.readBookMark(bookmarkId);
-        bookmark.ifPresent(value -> model.addAttribute("bookmark", value));
-        return "/my/bookmark/myBookmarkList";
+
+        if (bookmark.isPresent() && bookmark.get().getBoard() != null) {
+            model.addAttribute("bookmark", bookmark.get());
+        } else {
+            // board가 없거나 북마크가 없는 경우 처리
+            model.addAttribute("errorMessage", "해당 게시물을 찾을 수 없습니다.");
+        }
+//        bookmark.ifPresent(value -> model.addAttribute("bookmark", value));
+        return "/my/myBookmark";
     }
 
     @GetMapping("/myBookmarkList")
