@@ -3,8 +3,12 @@ package org.pgm.ootdproject.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.pgm.ootdproject.DTO.BoardDTO;
 import org.pgm.ootdproject.DTO.ReplyDTO;
+import org.pgm.ootdproject.DTO.UserDTO;
 import org.pgm.ootdproject.entity.Board;
+import org.pgm.ootdproject.entity.Reply;
+import org.pgm.ootdproject.entity.User;
 import org.pgm.ootdproject.service.BoardService;
 import org.pgm.ootdproject.service.BoardServiceImpl;
 import org.pgm.ootdproject.service.ReplyService;
@@ -12,10 +16,7 @@ import org.pgm.ootdproject.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -51,9 +52,16 @@ public class ReplyController {
         return "/my/myReplyList";
     }
 
+
     // 특정 게시물의 댓글 조회
     @GetMapping("/board/{boardId}")
+    @ResponseBody // json 형식으로 반환
     public List<ReplyDTO> getRepliesByBoard(@PathVariable Long boardId, Model model) {
+//        List<ReplyDTO> replies = replyService.readRepliesByBoardId(boardId);
+//        Long userId = 1L; // 테스트시 replyController와 맞추기
+//        model.addAttribute("UID", userId);
+//        model.addAttribute("replies", replies);
+//        return "/my/myBoard";
         return replyService.readRepliesByBoardId(boardId);
     }
 
@@ -61,7 +69,13 @@ public class ReplyController {
     @PostMapping("/create")
     public ResponseEntity<ReplyDTO> createReply(@RequestParam Long boardId,
                                                 @RequestParam Long userId,
-                                                @RequestParam String content) {
-//        Board board = (boardService.readBoard(boardId).get()).orElseThrow(() -> new IllegalArgumentException("Board not found"));
+                                                @RequestParam String content,
+                                                Model model) {
+//        Long uid = 1L; // 테스트시 replyController와 맞추기
+//        model.addAttribute("UID", uid);
+        BoardDTO board = boardService.findById(boardId).orElseThrow(() -> new IllegalArgumentException("Board not found"));
+        UserDTO user = userService.readUser(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        ReplyDTO createdReply = replyService.createReply(board, user, content);
+        return ResponseEntity.ok(createdReply);
     }
 }

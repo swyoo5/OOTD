@@ -1,5 +1,6 @@
 package org.pgm.ootdproject.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -20,11 +21,11 @@ public class ReplyDTO {
     @Size(min = 15, max = 2000)
     private String content;
 
-    @NotEmpty
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdDate;
 
     @NotEmpty
-    private Boolean isDeleted = false;
+    private Boolean isDeleted;
 
     private Long boardId;
     private Long userId;

@@ -1,6 +1,7 @@
 package org.pgm.ootdproject.service;
 
 import org.pgm.ootdproject.DTO.BoardDTO;
+import org.pgm.ootdproject.entity.Board;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,4 +16,8 @@ public interface BoardService {
     List<BoardDTO> readBoardsByUserId(Long userId);
 
     void increaseVisitCount(Long boardId);
+
+    Optional<BoardDTO> findById(Long boardId);
+
+    void saveBoard(BoardDTO boardDTO);
 }
