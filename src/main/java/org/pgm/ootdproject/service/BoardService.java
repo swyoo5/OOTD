@@ -1,7 +1,6 @@
 package org.pgm.ootdproject.service;
 
 import org.pgm.ootdproject.DTO.BoardDTO;
-import org.pgm.ootdproject.entity.Board;
 
 import java.util.List;
 import java.util.Optional;

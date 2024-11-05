@@ -1,7 +1,6 @@
 package org.pgm.ootdproject.service;
 
 import org.pgm.ootdproject.DTO.UserDTO;
-import org.pgm.ootdproject.entity.User;
 
 import java.util.Optional;
 

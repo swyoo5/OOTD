@@ -1,7 +1,6 @@
 package org.pgm.ootdproject.service;
 
 import org.pgm.ootdproject.DTO.BookmarkDTO;
-import org.pgm.ootdproject.entity.BookMark;
 import org.pgm.ootdproject.entity.BookMarkId;
 
 import java.util.List;
