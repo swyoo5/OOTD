@@ -98,10 +98,7 @@
                     <div id="collapsePosts" class="accordion-collapse collapse" aria-labelledby="headingPosts"
                          data-bs-parent="#myPageAccordion">
                         <div class="accordion-body">
-                            <a th:href="@{/myBoardList}">게시물 조회</a><br>
-<!--                            <form action="/delete/{boardId}" method="post">-->
-<!--                                <button type="submit" class="btn btn-danger">게시물 삭제</button>-->
-<!--                            </form>-->
+                            <a th:href="@{/myBoardList/{userId}(userId=${userId})}">게시물 조회</a><br>
                         </div>
                     </div>
                 </div>
@@ -118,7 +115,7 @@
                     <div id="collapseComments" class="accordion-collapse collapse" aria-labelledby="headingComments"
                          data-bs-parent="#myPageAccordion">
                         <div class="accordion-body">
-                            <a th:href="@{/myReplyList}">댓글 조회</a>
+                            <a th:href="@{/myReplyList/{userId}(userId=${userId})}">댓글 조회</a>
                         </div>
                     </div>
                 </div>

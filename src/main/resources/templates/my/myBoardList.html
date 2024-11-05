@@ -24,12 +24,12 @@
         <tr th:each="board, iterStat : ${boards}">
             <th scope="row" th:text="${iterStat.count}"></th> <!-- 순번 -->
             <td>
-                <a th:href="@{/board/{boardId}(boardId=${board.boardId})}" th:text="${board.title}">제목</a>
+                <a th:href="@{/myBoard/{userId}/{boardId}(userId=${board.userId}, boardId=${board.boardId})}" th:text="${board.title}">제목</a>
             </td>
-            <td th:text="${board.user.loginId}">작성자</td>
+            <td th:text="${board.userLoginId}">작성자</td>
             <td th:text="${#temporals.format(board.regDate, 'yyyy-MM-dd HH:mm')}">작성 날짜</td>
             <td>
-                <form th:action="@{/delete/{boardId}(boardId=${board.boardId})}" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');">
+                <form th:action="@{/delete/{userId}/{boardId}(userId=${board.userId}, boardId=${board.boardId})}" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');">
                     <button type="submit" class="btn btn-danger btn-sm">삭제</button>
                 </form>
             </td>

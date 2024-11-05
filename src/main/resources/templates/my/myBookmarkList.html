@@ -24,26 +24,24 @@
             <th scope="row" th:text="${iterStat.count}">번호</th>
 
             <!-- 제목 링크 - bookmark.board가 null이 아닌 경우에만 표시 -->
-            <td th:if="${bookmark.board != null}">
-                <a th:href="@{/bookmark/{userId}/{boardId}(userId=${bookmark.user.userId}, boardId=${bookmark.board.boardId})}"
-                   th:text="${bookmark.board.title}">제목</a>
+            <td th:if="${bookmark.boardId != null}">
+                <a th:href="@{/myBoard/{userId}/{boardId}(userId=${bookmark.userId}, boardId=${bookmark.boardId})}"
+                   th:text="${bookmark.title}">제목</a>
             </td>
-
             <!-- board가 null인 경우를 대비하여 제목을 대체 텍스트로 표시 -->
-            <td th:if="${bookmark.board == null}">
+            <td th:if="${bookmark.boardId == null}">
                 <span>정보 없음</span>
             </td>
 
             <!-- 작성자 및 작성 날짜 - board가 null이 아닌 경우만 접근 -->
-            <td th:text="${bookmark.board != null ? bookmark.board.user.nickname : '정보 없음'}">작성자</td>
-            <td th:text="${bookmark.board != null ? #temporals.format(bookmark.board.regDate, 'yyyy-MM-dd HH:mm') : ''}">작성 날짜</td>
+            <td th:text="${bookmark.boardId != null ? bookmark.userNickname : '정보 없음'}">작성자</td>
+            <td th:text="${bookmark.boardId != null ? #temporals.format(bookmark.regDate, 'yyyy-MM-dd HH:mm') : ''}">작성 날짜</td>
 
             <!-- 삭제 폼 -->
             <td>
-
-                <form th:action="@{/delete/{userId}/{boardId}(userId=${bookmark.user.userId}, boardId=${bookmark.board.boardId != null ? bookmark.board.boardId : 0})}"
+                <form th:action="@{/bookmarkDelete/{userId}/{boardId}(userId=${bookmark.userId}, boardId=${bookmark.boardId})}"
                       method="post" onsubmit="return confirm('북마크를 삭제하시겠습니까?');">
-                    <button type="submit" class="btn btn-danger btn-sm" th:disabled="${bookmark.board == null}">삭제</button>
+                    <button type="submit" class="btn btn-danger btn-sm" th:disabled="${bookmark.boardId == null}">삭제</button>
                 </form>
             </td>
         </tr>

@@ -2,6 +2,7 @@ package org.pgm.ootdproject.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.pgm.ootdproject.DTO.UserDTO;
 import org.pgm.ootdproject.entity.User;
 import org.pgm.ootdproject.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,7 @@ public class UserController {
     // 마이페이지
     @GetMapping("/mypage")
     public String showMyPage(Model model) {
-        Long userId = 2L;
+        Long userId = 21L;
         model.addAttribute("userId", userId);
         return "/my/mypage";
     }
@@ -40,26 +41,26 @@ public class UserController {
 //        User user = userService.readUser(userId).orElse(null);
 //        model.addAttribute("user", user);
 //        return "/my/profile";
-        Optional<User> user = userService.readUser(userId);
-        user.ifPresent(value -> model.addAttribute("user", value));
+        Optional<UserDTO> userDTO = userService.readUser(userId);
+        userDTO.ifPresent(value -> model.addAttribute("user", value));
         return "/my/profile";
     }
 
     // 프로필 수정 폼
     @GetMapping("/profile/{userId}/updateMyProfile")
     public String updateProfileForm(@PathVariable Long userId, Model model) {
-        Optional<User> user = userService.readUser(userId);
-        user.ifPresent(value -> model.addAttribute("user", value));
+        Optional<UserDTO> userDTO = userService.readUser(userId);
+        userDTO.ifPresent(value -> model.addAttribute("user", value));
         return "/my/updateMyProfile";
     }
 
     // 프로필 수정 처리
     @PostMapping("/profile/{userId}/updateMyProfile")
     public String updateProfile(@PathVariable Long userId,
-                                @ModelAttribute User updatedUser,
+                                @ModelAttribute UserDTO updatedUser,
                                 Model model) {
-        User user = userService.updateUser(userId, updatedUser);
-        model.addAttribute("user", user);
+        UserDTO userDTO = userService.updateUser(userId, updatedUser);
+        model.addAttribute("user", userDTO);
         return "redirect:/profile/" + userId;
     }
 

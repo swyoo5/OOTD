@@ -2,6 +2,7 @@ package org.pgm.ootdproject.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.pgm.ootdproject.DTO.BookmarkDTO;
 import org.pgm.ootdproject.entity.BookMark;
 import org.pgm.ootdproject.entity.BookMarkId;
 import org.pgm.ootdproject.service.BookMarkService;
@@ -27,31 +28,32 @@ public class BookmarkController {
                                   @PathVariable("boardId") Long boardId,
                                   Model model) {
         BookMarkId bookmarkId = new BookMarkId(userId, boardId);
-        Optional<BookMark> bookmark = bookMarkService.readBookMark(bookmarkId);
+        Optional<BookmarkDTO> bookmark = bookMarkService.readBookMark(bookmarkId);
 
-        if (bookmark.isPresent() && bookmark.get().getBoard() != null) {
+        if (bookmark.isPresent()) {
             model.addAttribute("bookmark", bookmark.get());
         } else {
             // board가 없거나 북마크가 없는 경우 처리
             model.addAttribute("errorMessage", "해당 게시물을 찾을 수 없습니다.");
             log.error("Bookmark or Board not found for userId: {}, boardId: {}", userId, boardId);
         }
-//        bookmark.ifPresent(value -> model.addAttribute("bookmark", value));
         return "/my/myBookmark";
     }
 
+
+    // 사용자의 게시물 목록
     @GetMapping("/myBookmarkList/{userId}")
     public String readBookmarkList(@PathVariable("userId") Long userId, Model model) {
-        List<BookMark> bookMarks = bookMarkService.readUserBookmarks(userId);
+        List<BookmarkDTO> bookMarks = bookMarkService.readUserBookmarks(userId);
         model.addAttribute("bookmarks", bookMarks);
         return "/my/myBookmarkList";
     }
 
-    @PostMapping("/delete/{userId}/{boardId}")
+    @PostMapping("/bookmarkDelete/{userId}/{boardId}")
     public String deleteBookmark(@PathVariable("userId") Long userId,
                                  @PathVariable("boardId") Long boardId) {
         BookMarkId bookmarkId = new BookMarkId(userId, boardId);
         bookMarkService.deleteBookMark(bookmarkId);
-        return "redirect:/myBookmarkList";
+        return "redirect:/myBookmarkList/" + userId;
     }
 }

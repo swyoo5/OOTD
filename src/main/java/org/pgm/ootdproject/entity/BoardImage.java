@@ -21,4 +21,7 @@ public class BoardImage {
 
     @Column(name = "image_url", length = 500, nullable = false)
     private String imageUrl;
+
+    @Column(name = "file_name")
+    private String fileName;
 }

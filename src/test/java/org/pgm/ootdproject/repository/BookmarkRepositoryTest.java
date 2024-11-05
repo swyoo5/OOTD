@@ -27,15 +27,15 @@ public class BookmarkRepositoryTest {
     public void testInsert() {
         IntStream.rangeClosed(1, 10).forEach(i -> {
             User user = userRepository.save(User.builder()
-                    .loginId("user1")
-                    .password("password1")
-                    .email("user1@example.com")
-                    .nickname("nickname1")
+                    .loginId("user" + i)
+                    .password("password" + i)
+                    .email("user" + i + "@example.com")
+                    .nickname("nickname" + i)
                     .build());
 
             Board board = boardRepository.save(Board.builder()
-                    .title("Test Board")
-                    .content("Test Content")
+                    .title("Test Board" + i)
+                    .content("Test Content" + i)
                     .user(user)
                     .build());
 

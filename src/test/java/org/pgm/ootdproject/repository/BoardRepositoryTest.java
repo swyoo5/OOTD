@@ -19,14 +19,16 @@ public class BoardRepositoryTest {
 
     @Test
     public void testInsert() {
-        User user = userRepository.save(User.builder()
-                .loginId("user1")
-                .email("user1@example.com")
-                .nickname("nickname1")
-                .password("testPassword")
-                .build());
+
 
         IntStream.rangeClosed(1, 10).forEach(i -> {
+            User user = userRepository.save(User.builder()
+                    .loginId("user" + i)
+                    .email("user" + i + "@example.com")
+                    .nickname("nickname1" + i)
+                    .password("testPassword" + i)
+                    .build());
+
             Board board = Board.builder()
                     .user(user)
                     .title("title" + i)

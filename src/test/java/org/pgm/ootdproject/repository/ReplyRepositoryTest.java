@@ -22,21 +22,18 @@ public class ReplyRepositoryTest {
 
     @Test
     public void testInsert() {
-
-        User user = userRepository.save(User.builder()
-                .loginId("user1")
-                .email("user1@example.com")
-                .nickname("nickname1")
-                .password("password1")
-                .build());
-        Board board = boardRepository.save(Board.builder()
-                .title("Test Board")
-                .user(user)
-                .content("Test Content")
-                .build());
-
-
         IntStream.rangeClosed(1, 10).forEach(i -> {
+            User user = userRepository.save(User.builder()
+                    .loginId("user" + i)
+                    .email("user" + i + "@example.com")
+                    .nickname("nickname" + i)
+                    .password("password" + i)
+                    .build());
+            Board board = boardRepository.save(Board.builder()
+                    .title("Test Board" + i)
+                    .user(user)
+                    .content("Test Content" + i)
+                    .build());
             Reply reply = Reply.builder()
                     .content("내용" + i)
                     .board(board)
