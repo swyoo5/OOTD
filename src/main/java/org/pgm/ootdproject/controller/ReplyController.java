@@ -62,6 +62,6 @@ public class ReplyController {
     public ResponseEntity<ReplyDTO> createReply(@RequestParam Long boardId,
                                                 @RequestParam Long userId,
                                                 @RequestParam String content) {
-//        Board board = (boardService.readBoard(boardId).get()).orElseThrow(() -> new IllegalArgumentException("Board not found"));
+        Board board = (boardService.readBoard(boardId).get()).orElseThrow(() -> new IllegalArgumentException("Board not found"));
     }
 }
