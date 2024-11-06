@@ -21,5 +21,6 @@ public interface BoardService {
 
     void saveBoard(BoardDTO boardDTO);
 
-    void updateAllPopularityScores();
+    public List<BoardDTO> getPopularBoards();
+//    void updateAllPopularityScores();
 }

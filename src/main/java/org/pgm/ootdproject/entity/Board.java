@@ -46,8 +46,8 @@ public class Board {
 
     // 인기 게시물 선정 지표
     @Column(name = "popularity_score", nullable = false)
-    @ColumnDefault("0")
-    private float popularityScore;
+    @ColumnDefault("1")
+    private long popularityScore;
 
     // 자식 엔터티 Cascade
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true)
@@ -68,9 +68,9 @@ public class Board {
     @PrePersist
     @PreUpdate
     private void calculatePopularityScore() {
-        float likeCount = boardLikes != null ? boardLikes.size() : 0;
-        float bookmarkCount = bookmarks != null ? bookmarks.size() : 0;
-        float visitCount = this.visitCount;
-        this.popularityScore = 0.4f * likeCount + 0.4f * bookmarkCount + 0.2f * visitCount;
+        long likeCount = boardLikes != null ? boardLikes.size() : 1;
+        long bookmarkCount = bookmarks != null ? bookmarks.size() : 1;
+        long visitCount = this.visitCount;
+        this.popularityScore = 4 * likeCount + 4 * bookmarkCount + 2 * visitCount;
     }
 }

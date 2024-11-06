@@ -32,9 +32,9 @@ public class BoardDTO {
     private LocalDateTime regDate;
 
     @NotEmpty
-    private long visitCount = 0;
+    private long visitCount;
 
     private long userId;
     private String userLoginId;
-    private float popularityScore;
+    private long popularityScore;
 }

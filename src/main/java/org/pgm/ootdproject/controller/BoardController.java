@@ -55,4 +55,12 @@ public class BoardController {
         boardService.deleteBoard(boardId);
         return "redirect:/myBoardList/" + userId;
     }
+
+    // 인기 게시물 10개 가져옴
+    @GetMapping("/popularBoards")
+    public String getPopularBoards(Model model) {
+        List<BoardDTO> popularBoards = boardService.getPopularBoards();
+        model.addAttribute("popularBoards", popularBoards);
+        return "/my/mypage";
+    }
 }

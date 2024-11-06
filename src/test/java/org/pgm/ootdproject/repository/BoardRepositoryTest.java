@@ -32,6 +32,7 @@ public class BoardRepositoryTest {
             Board board = Board.builder()
                     .user(user)
                     .title("title" + i)
+                    .popularityScore(1)
                     .build();
             Board result = boardRepository.save(board);
         });

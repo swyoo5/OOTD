@@ -8,6 +8,7 @@ import org.pgm.ootdproject.repository.BoardRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -55,10 +56,10 @@ public class BoardServiceImpl implements BoardService {
     public void saveBoard(BoardDTO boardDTO) {
         Board board = convertDTOToEntity(boardDTO);
 
-        float likeCount = board.getBoardLikes().size();
-        float bookmarkCount = board.getBookmarks().size();
-        float visitCount = board.getVisitCount();
-        float popularityScore = 0.4f * likeCount + 0.4f * bookmarkCount + 0.2f * visitCount;
+        long likeCount = board.getBoardLikes().size();
+        long bookmarkCount = board.getBookmarks().size();
+        long visitCount = board.getVisitCount();
+        long popularityScore = 4 * likeCount + 4 * bookmarkCount + 2 * visitCount;
         board.setPopularityScore(popularityScore);
 
         boardRepository.save(board);
@@ -69,10 +70,10 @@ public class BoardServiceImpl implements BoardService {
         List<Board> boards = boardRepository.findAll();
 
         for (Board board : boards) {
-            float likeCount = board.getBoardLikes() != null ? board.getBoardLikes().size() : 0;
-            float bookmarkCount = board.getBookmarks() != null ? board.getBookmarks().size() : 0;
-            float visitCount = board.getVisitCount();
-            float popularityScore = 0.4f * likeCount + 0.4f * bookmarkCount + 0.2f * visitCount;
+            long likeCount = board.getBoardLikes() != null ? board.getBoardLikes().size() : 1;
+            long bookmarkCount = board.getBookmarks() != null ? board.getBookmarks().size() : 1;
+            long visitCount = board.getVisitCount();
+            long popularityScore = 4 * likeCount + 4 * bookmarkCount + 2 * visitCount;
 
             // 점수 설정
             board.setPopularityScore(popularityScore);
@@ -80,6 +81,15 @@ public class BoardServiceImpl implements BoardService {
 
         // 데이터베이스에 모든 게시물을 저장
         boardRepository.saveAll(boards);
+    }
+
+    // 상위 10개
+    @Transactional(readOnly = true)
+    public List<BoardDTO> getPopularBoards() {
+        return boardRepository.findTop10ByRegDateAfterOrderByPopularityScoreDesc(LocalDateTime.now().minusWeeks(4))
+                .stream()
+                .map(this::convertEntityToDTO)
+                .collect(Collectors.toList());
     }
 
     private Board convertDTOToEntity(BoardDTO boardDTO) {
@@ -95,10 +105,10 @@ public class BoardServiceImpl implements BoardService {
                 .build();
     }
     private BoardDTO convertEntityToDTO(Board board) {
-        float likeCount = board.getBoardLikes().size();
-        float bookmarkCount = board.getBookmarks().size();
-        float visitCount = board.getVisitCount();
-        float popularityScore = 0.4f * likeCount + 0.4f * bookmarkCount + 0.2f * visitCount;
+        long likeCount = board.getBoardLikes().size();
+        long bookmarkCount = board.getBookmarks().size();
+        long visitCount = board.getVisitCount();
+        long popularityScore = 4 * likeCount + 4 * bookmarkCount + 2 * visitCount;
 
         return BoardDTO.builder()
                 .boardId(board.getBoardId())

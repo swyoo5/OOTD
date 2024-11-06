@@ -53,13 +53,20 @@
                 인기 게시물
             </div>
             <div class="card-body">
-                <a href="#"><img src="https://via.placeholder.com/150" alt="이미지" class="img-fluid"></a>
+                <div th:each="board : ${popularBoards}">
+                    <a th:href="@{/myBoard/{userId}/{boardId}(userId=${board.userId}, boardId=${board.boardId})}">
+<!--                        <img th:src="${board.imageUrl != null ? board.imageUrl : 'https://via.placeholder.com/150'}"-->
+<!--                             alt="이미지" class="img-fluid" th:alt="${board.title}">-->
+                    </a>
+                    <h6 th:text="${board.title}" class="mt-2"></h6>
+                </div>
                 <div class="mt-2">
                     <button class="btn btn-secondary btn-sm">&lt;</button>
                     <button class="btn btn-secondary btn-sm">&gt;</button>
                 </div>
             </div>
         </div>
+
 
         <!-- Page content with Accordion -->
         <div class="container card-container shadow-sm" layout:fragment="content">
