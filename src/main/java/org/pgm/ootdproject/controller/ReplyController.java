@@ -66,6 +66,7 @@ public class ReplyController {
     }
 
     // 댓글 생성
+
     @PostMapping("/create")
     public ResponseEntity<ReplyDTO> createReply(@RequestParam Long boardId,
                                                 @RequestParam Long userId,

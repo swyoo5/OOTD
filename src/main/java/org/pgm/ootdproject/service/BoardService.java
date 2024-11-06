@@ -20,4 +20,6 @@ public interface BoardService {
     Optional<BoardDTO> findById(Long boardId);
 
     void saveBoard(BoardDTO boardDTO);
+
+    void updateAllPopularityScores();
 }

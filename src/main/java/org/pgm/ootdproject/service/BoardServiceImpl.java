@@ -1,12 +1,12 @@
 package org.pgm.ootdproject.service;
 
-import jakarta.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.pgm.ootdproject.DTO.BoardDTO;
 import org.pgm.ootdproject.entity.Board;
 import org.pgm.ootdproject.repository.BoardRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -54,19 +54,52 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void saveBoard(BoardDTO boardDTO) {
         Board board = convertDTOToEntity(boardDTO);
+
+        float likeCount = board.getBoardLikes().size();
+        float bookmarkCount = board.getBookmarks().size();
+        float visitCount = board.getVisitCount();
+        float popularityScore = 0.4f * likeCount + 0.4f * bookmarkCount + 0.2f * visitCount;
+        board.setPopularityScore(popularityScore);
+
         boardRepository.save(board);
     }
 
+    @Transactional
+    public void updateAllPopularityScores() {
+        List<Board> boards = boardRepository.findAll();
+
+        for (Board board : boards) {
+            float likeCount = board.getBoardLikes() != null ? board.getBoardLikes().size() : 0;
+            float bookmarkCount = board.getBookmarks() != null ? board.getBookmarks().size() : 0;
+            float visitCount = board.getVisitCount();
+            float popularityScore = 0.4f * likeCount + 0.4f * bookmarkCount + 0.2f * visitCount;
+
+            // 점수 설정
+            board.setPopularityScore(popularityScore);
+        }
+
+        // 데이터베이스에 모든 게시물을 저장
+        boardRepository.saveAll(boards);
+    }
+
     private Board convertDTOToEntity(BoardDTO boardDTO) {
+
         return Board.builder()
                 .boardId(boardDTO.getBoardId())
                 .title(boardDTO.getTitle())
                 .content(boardDTO.getContent())
                 .purchaseLink(boardDTO.getPurchaseLink())
                 .regDate(boardDTO.getRegDate())
+                .visitCount(boardDTO.getVisitCount())
+                .popularityScore(boardDTO.getPopularityScore())
                 .build();
     }
     private BoardDTO convertEntityToDTO(Board board) {
+        float likeCount = board.getBoardLikes().size();
+        float bookmarkCount = board.getBookmarks().size();
+        float visitCount = board.getVisitCount();
+        float popularityScore = 0.4f * likeCount + 0.4f * bookmarkCount + 0.2f * visitCount;
+
         return BoardDTO.builder()
                 .boardId(board.getBoardId())
                 .title(board.getTitle())
@@ -75,6 +108,7 @@ public class BoardServiceImpl implements BoardService {
                 .regDate(board.getRegDate())
                 .userId(board.getUser().getUserId())
                 .userLoginId(board.getUser().getLoginId())
+                .popularityScore(popularityScore)
                 .build();
     }
 }
