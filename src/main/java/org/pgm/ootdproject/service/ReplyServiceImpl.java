@@ -3,7 +3,9 @@ package org.pgm.ootdproject.service;
 import jakarta.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.pgm.ootdproject.DTO.BoardDTO;
 import org.pgm.ootdproject.DTO.ReplyDTO;
+import org.pgm.ootdproject.DTO.UserDTO;
 import org.pgm.ootdproject.entity.Board;
 import org.pgm.ootdproject.entity.Reply;
 import org.pgm.ootdproject.entity.User;
@@ -58,7 +60,9 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public void createReply(Board board, User user, String content) {
+    public ReplyDTO createReply(BoardDTO boardDTO, UserDTO userDTO, String content) {
+        Board board = convertBoardDTOToEntity(boardDTO);
+        User user = convertUserDTOToEntity(userDTO);
         Reply reply = Reply.builder()
                 .board(board)
                 .user(user)
@@ -66,6 +70,7 @@ public class ReplyServiceImpl implements ReplyService {
                 .isDeleted(false)
                 .build();
         replyRepository.save(reply);
+        return convertEntityToDTO(reply);
     }
 
     @Override
@@ -88,6 +93,25 @@ public class ReplyServiceImpl implements ReplyService {
                 .content(replyDTO.getContent())
                 .createdDate(replyDTO.getCreatedDate())
                 .isDeleted(replyDTO.getIsDeleted())
+                .build();
+    }
+
+    private Board convertBoardDTOToEntity(BoardDTO boardDTO) {
+        return Board.builder()
+                .boardId(boardDTO.getBoardId())
+                .title(boardDTO.getTitle())
+                .content(boardDTO.getContent())
+                .purchaseLink(boardDTO.getPurchaseLink())
+                .regDate(boardDTO.getRegDate())
+                .build();
+    }
+
+    private User convertUserDTOToEntity(UserDTO userDTO) {
+        return User.builder()
+                .userId(userDTO.getUserId())
+                .nickname(userDTO.getNickname())
+                .loginId(userDTO.getLoginId())
+                .email(userDTO.getEmail())
                 .build();
     }
 

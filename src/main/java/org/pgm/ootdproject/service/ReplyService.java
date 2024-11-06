@@ -1,6 +1,8 @@
 package org.pgm.ootdproject.service;
 
+import org.pgm.ootdproject.DTO.BoardDTO;
 import org.pgm.ootdproject.DTO.ReplyDTO;
+import org.pgm.ootdproject.DTO.UserDTO;
 import org.pgm.ootdproject.entity.Board;
 import org.pgm.ootdproject.entity.User;
 
@@ -14,6 +16,6 @@ public interface ReplyService {
 
     ReplyDTO updateReply(ReplyDTO replyDTO, String content);
     List<ReplyDTO> readRepliesByBoardId(Long boardId);
-    void createReply(Board board, User user, String content);
+    ReplyDTO createReply(BoardDTO board, UserDTO user, String content);
     void saveReply(ReplyDTO replyDTO);
 }

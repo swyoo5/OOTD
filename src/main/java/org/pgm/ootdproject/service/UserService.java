@@ -8,5 +8,6 @@ import java.util.Optional;
 public interface UserService {
     UserDTO updateUser(Long userId, UserDTO updatedUserDTO);
     void deleteUser(Long userId);
-    public Optional<UserDTO> readUser(Long userId);
+    Optional<UserDTO> readUser(Long userId);
+    void savdUser(UserDTO userDTO);
 }

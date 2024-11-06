@@ -46,6 +46,26 @@ public class BoardServiceImpl implements BoardService {
         boardRepository.save(board);
     }
 
+    @Override
+    public Optional<BoardDTO> findById(Long boardId) {
+        return boardRepository.findById(boardId).map(this::convertEntityToDTO);
+    }
+
+    @Override
+    public void saveBoard(BoardDTO boardDTO) {
+        Board board = convertDTOToEntity(boardDTO);
+        boardRepository.save(board);
+    }
+
+    private Board convertDTOToEntity(BoardDTO boardDTO) {
+        return Board.builder()
+                .boardId(boardDTO.getBoardId())
+                .title(boardDTO.getTitle())
+                .content(boardDTO.getContent())
+                .purchaseLink(boardDTO.getPurchaseLink())
+                .regDate(boardDTO.getRegDate())
+                .build();
+    }
     private BoardDTO convertEntityToDTO(Board board) {
         return BoardDTO.builder()
                 .boardId(board.getBoardId())

@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
         user.setProfileImage(updatedUserDTO.getProfileImage());
         user.setEmail(updatedUserDTO.getEmail());
         userRepository.save(user);
-        return convertToDTO(user);
+        return convertEntityToDTO(user);
     }
 
     @Override
@@ -36,10 +36,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<UserDTO> readUser(Long userId) {
-        return userRepository.findById(userId).map(this::convertToDTO);
+        return userRepository.findById(userId).map(this::convertEntityToDTO);
     }
 
-    private UserDTO convertToDTO(User user) {
+    @Override
+    public void savdUser(UserDTO userDTO) {
+        User user = convertDTOToEntity(userDTO);
+        userRepository.save(user);
+    }
+
+    private User convertDTOToEntity(UserDTO userDTO) {
+        return User.builder()
+                .userId(userDTO.getUserId())
+                .loginId(userDTO.getLoginId())
+                .email(userDTO.getEmail())
+                .profileImage(userDTO.getProfileImage())
+                .nickname(userDTO.getNickname())
+                .introduce(userDTO.getIntroduce())
+                .build();
+    }
+
+    private UserDTO convertEntityToDTO(User user) {
         return UserDTO.builder()
                 .userId(user.getUserId())
                 .loginId(user.getLoginId())
