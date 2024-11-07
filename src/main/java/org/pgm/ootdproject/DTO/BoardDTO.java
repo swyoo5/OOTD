@@ -36,5 +36,5 @@ public class BoardDTO {
 
     private long userId;
     private String userLoginId;
-    private long popularityScore;
+//    private long popularityScore;
 }

@@ -21,7 +21,7 @@ public class Board {
     @Column(name = "board_id")
     private long boardId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     // 외래 키 설정
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -45,9 +45,9 @@ public class Board {
     private long visitCount;
 
     // 인기 게시물 선정 지표
-    @Column(name = "popularity_score", nullable = false)
-    @ColumnDefault("1")
-    private long popularityScore;
+//    @Column(name = "popularity_score", nullable = false)
+//    @ColumnDefault("1")
+//    private long popularityScore;
 
     // 자식 엔터티 Cascade
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true)
@@ -65,12 +65,12 @@ public class Board {
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<BookMark> bookmarks;
 
-    @PrePersist
-    @PreUpdate
-    private void calculatePopularityScore() {
-        long likeCount = boardLikes != null ? boardLikes.size() : 1;
-        long bookmarkCount = bookmarks != null ? bookmarks.size() : 1;
-        long visitCount = this.visitCount;
-        this.popularityScore = 4 * likeCount + 4 * bookmarkCount + 2 * visitCount;
-    }
+//    @PrePersist
+//    @PreUpdate
+//    private void calculatePopularityScore() {
+//        long likeCount = boardLikes != null ? boardLikes.size() : 1;
+//        long bookmarkCount = bookmarks != null ? bookmarks.size() : 1;
+//        long visitCount = this.visitCount;
+//        this.popularityScore = 4 * likeCount + 4 * bookmarkCount + 2 * visitCount;
+//    }
 }

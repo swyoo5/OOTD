@@ -15,12 +15,12 @@ public class ChatParticipant {
     private ChatParticipantId id;
 
     @MapsId("chatRoomId")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chatroom_id", nullable = false)
     private ChatRoom chatRoom;
 
     @MapsId("userId")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }

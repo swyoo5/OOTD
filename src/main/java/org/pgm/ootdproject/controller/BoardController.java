@@ -61,6 +61,6 @@ public class BoardController {
     public String getPopularBoards(Model model) {
         List<BoardDTO> popularBoards = boardService.getPopularBoards();
         model.addAttribute("popularBoards", popularBoards);
-        return "/my/mypage";
+        return "/layout/basic";
     }
 }

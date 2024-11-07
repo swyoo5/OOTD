@@ -52,41 +52,50 @@ public class BoardServiceImpl implements BoardService {
         return boardRepository.findById(boardId).map(this::convertEntityToDTO);
     }
 
+//    @Override
+//    public void saveBoard(BoardDTO boardDTO) {
+//        Board board = convertDTOToEntity(boardDTO);
+//
+//        long likeCount = board.getBoardLikes().size();
+//        long bookmarkCount = board.getBookmarks().size();
+//        long visitCount = board.getVisitCount();
+//        long popularityScore = 4 * likeCount + 4 * bookmarkCount + 2 * visitCount;
+//        board.setPopularityScore(popularityScore);
+//
+//        boardRepository.save(board);
+//    }
+//
+//    @Transactional
+//    public void updateAllPopularityScores() {
+//        List<Board> boards = boardRepository.findAll();
+//
+//        for (Board board : boards) {
+//            long likeCount = board.getBoardLikes() != null ? board.getBoardLikes().size() : 1;
+//            long bookmarkCount = board.getBookmarks() != null ? board.getBookmarks().size() : 1;
+//            long visitCount = board.getVisitCount();
+//            long popularityScore = 4 * likeCount + 4 * bookmarkCount + 2 * visitCount;
+//
+//            // 점수 설정
+//            board.setPopularityScore(popularityScore);
+//        }
+//
+//        // 데이터베이스에 모든 게시물을 저장
+//        boardRepository.saveAll(boards);
+//    }
+//
+//    // 상위 10개
+//    @Transactional(readOnly = true)
+//    public List<BoardDTO> getPopularBoards() {
+//        return boardRepository.findTop10ByRegDateAfterOrderByPopularityScoreDesc(LocalDateTime.now().minusWeeks(4))
+//                .stream()
+//                .map(this::convertEntityToDTO)
+//                .collect(Collectors.toList());
+//    }
+
     @Override
-    public void saveBoard(BoardDTO boardDTO) {
-        Board board = convertDTOToEntity(boardDTO);
-
-        long likeCount = board.getBoardLikes().size();
-        long bookmarkCount = board.getBookmarks().size();
-        long visitCount = board.getVisitCount();
-        long popularityScore = 4 * likeCount + 4 * bookmarkCount + 2 * visitCount;
-        board.setPopularityScore(popularityScore);
-
-        boardRepository.save(board);
-    }
-
-    @Transactional
-    public void updateAllPopularityScores() {
-        List<Board> boards = boardRepository.findAll();
-
-        for (Board board : boards) {
-            long likeCount = board.getBoardLikes() != null ? board.getBoardLikes().size() : 1;
-            long bookmarkCount = board.getBookmarks() != null ? board.getBookmarks().size() : 1;
-            long visitCount = board.getVisitCount();
-            long popularityScore = 4 * likeCount + 4 * bookmarkCount + 2 * visitCount;
-
-            // 점수 설정
-            board.setPopularityScore(popularityScore);
-        }
-
-        // 데이터베이스에 모든 게시물을 저장
-        boardRepository.saveAll(boards);
-    }
-
-    // 상위 10개
-    @Transactional(readOnly = true)
     public List<BoardDTO> getPopularBoards() {
-        return boardRepository.findTop10ByRegDateAfterOrderByPopularityScoreDesc(LocalDateTime.now().minusWeeks(4))
+        LocalDateTime fourWeeksAgo = LocalDateTime.now().minusWeeks(4);
+        return boardRepository.findTop10ByPopularity(fourWeeksAgo)
                 .stream()
                 .map(this::convertEntityToDTO)
                 .collect(Collectors.toList());
@@ -101,14 +110,14 @@ public class BoardServiceImpl implements BoardService {
                 .purchaseLink(boardDTO.getPurchaseLink())
                 .regDate(boardDTO.getRegDate())
                 .visitCount(boardDTO.getVisitCount())
-                .popularityScore(boardDTO.getPopularityScore())
+//                .popularityScore(boardDTO.getPopularityScore())
                 .build();
     }
     private BoardDTO convertEntityToDTO(Board board) {
-        long likeCount = board.getBoardLikes().size();
-        long bookmarkCount = board.getBookmarks().size();
-        long visitCount = board.getVisitCount();
-        long popularityScore = 4 * likeCount + 4 * bookmarkCount + 2 * visitCount;
+//        long likeCount = board.getBoardLikes().size();
+//        long bookmarkCount = board.getBookmarks().size();
+//        long visitCount = board.getVisitCount();
+//        long popularityScore = 4 * likeCount + 4 * bookmarkCount + 2 * visitCount;
 
         return BoardDTO.builder()
                 .boardId(board.getBoardId())
@@ -118,7 +127,9 @@ public class BoardServiceImpl implements BoardService {
                 .regDate(board.getRegDate())
                 .userId(board.getUser().getUserId())
                 .userLoginId(board.getUser().getLoginId())
-                .popularityScore(popularityScore)
+//                .popularityScore(popularityScore)
                 .build();
     }
+
+
 }
